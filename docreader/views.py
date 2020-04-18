@@ -43,7 +43,7 @@ def doc_view(request):
                 ques_response = requests.get('https://readex-major-project.herokuapp.com/get_fill_ups/', data={"text":para.text})
                 json_response = json.loads(ques_response.text)
                 # print(type(json_response['fill_ups'][0]))   
-                if ques_response.status_code==201:
+                if ques_response.status_code==200:
                     questions.append(json_response)
         #############################
         doc_to_pdf_converter(doc_path)

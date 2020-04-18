@@ -51,7 +51,7 @@ def get_questions_page_wise(text_page_wise):
             if len(para)>0:
                 ques_response = requests.get('https://readex-major-project.herokuapp.com/get_fill_ups/', data={"text":para})
                 json_response = json.loads(ques_response.text)
-                if ques_response.status_code==201:
+                if ques_response.status_code==200:
                     questions_page_wise.append(json_response)
     
     return questions_page_wise
