@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>  
+    div.scroll { 
+        margin:4px, 4px; 
+        padding:4px; 
+        /* background-color: ;  */
+        /* width: 400px;  */
+        height: 650px; 
+        overflow-x: hidden; 
+        overflow-x: auto; 
+        text-align:justify; 
+    } 
+</style> 
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-8">
+        <div class=scroll>
+            <!-- <embed src="docreader/static/pdf_file.pdf" type="application/pdf" width="100%" height="600px" /> -->
+            <h1>Document</h1>
+            {% for para in full_text%}
+            <p>
+                {{para}}
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="scroll" style="background-color: #DCDCDC;">
+            <h1>Questions</h1>
+            {% for para in questions %}
+            <p>
+                <ul>
+                    {% for question in para.fill_ups %}
+                        <li>
+                            Question - {{question.question}}
+                            <br/>
+                            Answer - {{question.answer}}
+                            <br/><br/>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

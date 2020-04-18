@@ -1,0 +1,23 @@
+venv/
+.vscode/
+__pycache__/
+*.docx
+*.pdf
+.DS_Store
+# Thumbnails
+._*
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+.env
+*.sqlite3
+
+# Environment files
+*.in
+
+# CSV Files
+*.csv
