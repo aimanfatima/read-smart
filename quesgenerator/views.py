@@ -7,7 +7,7 @@ from quesgenerator.services.get_fill_in_the_blanks import Article
 
 # Create your views here.
 class GetFillUps(APIView):
-    def post(self, request):
+    def get(self, request):
         data = request.data
         if ("text" not in data) or len(data["text"]) == 0:
             return Response(
@@ -19,4 +19,4 @@ class GetFillUps(APIView):
             'data': data,
             'fill_ups':fill_ups
         }
-        return Response(fill_up_response , status=status.HTTP_201_CREATED)
+        return Response(fill_up_response , status=status.HTTP_200_OK)
