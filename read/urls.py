@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from quesgenerator import urls as quesgenerator_urls
+from frontend import urls as frontend_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include((quesgenerator_urls, "quesgenerator_urls"))),
+    path("", include((frontend_urls, "frontend_urls"))),
 ]

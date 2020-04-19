@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<style>  
+    div.scroll { 
+        margin:4px, 4px; 
+        padding:4px; 
+        /* background-color: ;  */
+        /* width: 400px;  */
+        height: 650px; 
+        overflow-x: hidden; 
+        overflow-x: auto; 
+        text-align:justify; 
+    } 
+    .myDIV {
+        overflow-x: hidden; 
+        /* overflow-x: auto;  */
+        position: fixed;
+        bottom: 70px;
+        right: 20px;
+        height: 400px;
+        width: 300px;
+        border-style: groove;
+        background-color: white;
+    }
+    .chat-bot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    height: 50px;
+    z-index: 999;
+    background-color:teal;
+    }   
+    .mainHead {
+        position: absolute;
+        height:30px;
+        width: 100%;
+        background:#00303f;
+        color:white;
+        font-family:monospace;
+        position: absolute;
+    }
+    .mainHead span {
+        position:relative;
+        top:10%;
+        left:35%;
+        transform:translate(-50%,-50%);
+        font-size:20px;
+    }
+    .chat {
+        position: absolute;
+        top:32px;
+        bottom: 100px;
+        overflow-x: hidden; 
+        overflow-x: auto; 
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .send {
+        position: absolute;
+        bottom: 5px;
+    }
+
+    .send .txt1 {
+        width:100%;
+        padding:5px;
+        margin:5px;
+        /* color:#00303f;
+        font-weight:bold; */
+}
+.send .txt1:focus {
+  border-color:#00303f;
+}
+.send .btn1 {
+    color: white;
+  background:#00303f;
+  width:70px;
+  margin:5px;
+}
+.txt {
+  background:#c9e1be;
+  padding:5px;
+  position:relative;
+  border-right: 2px solid #00303f;
+}
+.txt2 {
+  background:#A1E7ED;
+  padding:5px;
+  position:relative;
+  border-left: 2px solid #0c757e;
+}
+.txt-div {
+  margin:5px;
+  padding:5px;
+  width:80%;
+  float:right;
+}
+
+.txt-div2 {
+  margin:5px;
+  padding:5px;
+  width:80%;
+  float:left;
+}
+</style> 
+
+</head>
+<body>
+<!-- Div for documet rendering -->
+<div class="container-fluid">
+    <h1>Document</h1>
+    {% for para in full_text%}
+    <p>
+        {{para}}
+    </p>
+    {% endfor %}
+</div>
+
+<!-- Chat Box -->
+
+<button class="chat-bot-button" onclick="myFunction()">???</button>
+
+<div id="chatBox" style="display: none;" class="myDIV" >
+    <div class="mainHead">
+        <span>ChatBot</span>
+    </div> 
+    <div class="chat">
+        <div class="main">
+        </div>
+    </div>
+    <div class="send">
+        <textarea class="form-control txt1" rows="1"></textarea>
+        <input type="button" class="btn btn1" value="SEND" onclick="sender()">
+    </div>
+</div>
+
+<input type="hidden" id="text" name="variable" value="{{ full_text_json }}">
+<input type="hidden" id="no_of_para" value="{{ no_of_para }}">
+
+<script>
+    var text = document.getElementById("text").value;
+    var no_of_para = parseInt(document.getElementById("no_of_para").value);
+    text = JSON.parse(text);
+
+    var questions = [];
+    var current_para = 0;
+    var current_question = 1;
+    var first_question = true;
+
+    $('body').ready(function() {
+        for(var i=0; i<no_of_para; i++){
+            if(text[i].length!=0){
+                $.ajax({
+                    url : "http://localhost:8000/get_fill_ups/",
+                    type: "POST",
+                    data : {"text":text[i]},
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        if(data.fill_ups.length!=0){
+                            console.log(data);
+                            questions.push(data);
+                            if(first_question){
+                                res(questions[0].fill_ups[0].question);
+                                first_question = false;
+                            }
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        
+                    }
+                });
+            }
+        }
+    });
+
+    function sender() {
+        // console.log(no_of_para)
+        // console.log(questions.length);
+        console.log(current_para);
+        console.log(current_question);
+
+        var msg = $('.txt1').val();
+        $('.main').append('<div class="txt-div" ><div class="txt msg">'+msg+'</div><div class="time">'+new Date().toLocaleTimeString()+'</div></div>');
+        $('.txt1').val('');
+        // $('.chat').scrollTop = $('.chat').scrollHeight;
+        if(current_question < questions[current_para].fill_ups.length - 1 ) {
+            current_question++;
+        }
+        else {
+            current_question = 0;
+            current_para++;
+        }
+        if (current_para > questions.length - 1){
+            current_para = 0;
+            current_question = 0;
+        }
+        res(questions[current_para].fill_ups[current_question].question);
+        $('.chat').scrollTop = $('.chat').scrollHeight;
+    }
+
+    function res(msg) {
+        $('.main').append('<div class="txt-div2" ><div class="txt2 msg">'+msg+'</div><div class="time2">'+new Date().toLocaleTimeString()+'</div></div>');
+    }
+
+    function myFunction() {
+        var x = document.getElementById("chatBox");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
