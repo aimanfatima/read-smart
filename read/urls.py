@@ -15,17 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pdfreader import urls as pdfreader_urls
 from quesgenerator import urls as quesgenerator_urls
-from docreader import urls as docreader_urls
-from homepage import urls as homepage_urls
-from linkreader import urls as linkreader_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include((homepage_urls, "homepage_urls"))),
-    path("", include((pdfreader_urls, "pdfreader_urls"))),
     path("", include((quesgenerator_urls, "quesgenerator_urls"))),
-    path("", include((docreader_urls, "docreader_urls"))),
-    path("", include((linkreader_urls, "linkreader_urls")))
 ]

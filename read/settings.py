@@ -37,11 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pdfreader',
     'quesgenerator', 
-    'docreader',
-    'homepage',
-    'linkreader',
     'rest_framework',
 ]
 

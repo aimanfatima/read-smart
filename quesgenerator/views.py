@@ -5,9 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from quesgenerator.services.get_fill_in_the_blanks import Article
 
-# Create your views here.
 class GetFillUps(APIView):
-    def get(self, request):
+    def post(self, request):
         data = request.data
         if ("text" not in data) or len(data["text"]) == 0:
             return Response(
