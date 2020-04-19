@@ -44,13 +44,6 @@ def doc_view(request):
         for para in document.paragraphs:
             if len(para.text) != 0:
                 fullText.append(para.text)
-            # if len(para.text) != 0:
-            #     print("\n\n This is a Paragraph\n\n")
-            #     print(para.text)
-            #     ques_response = requests.post('http://127.0.0.1:8000/get_fill_ups/', data={"text":para.text})
-            #     json_response = json.loads(ques_response.text)
-            #     # print(type(json_response['fill_ups'][0]))   
-            #     if ques_response.status_code==200:
             #         questions.append(json_response)
         #############################
         doc_to_pdf_converter(doc_path)

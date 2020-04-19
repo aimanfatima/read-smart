@@ -159,7 +159,7 @@
         for(var i=0; i<no_of_para; i++){
             if(text[i].length!=0){
                 $.ajax({
-                    url : "http://localhost:8000/get_fill_ups/",
+                    url : "https://readex-major-project.herokuapp.com/get_fill_ups/",
                     type: "POST",
                     data : {"text":text[i]},
                     success: function(data, textStatus, jqXHR)
