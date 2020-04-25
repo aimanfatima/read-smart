@@ -137,13 +137,23 @@
         </div>
     </div>
     <div class="send">
-        <textarea class="form-control txt1" rows="1"></textarea>
+        <textarea class="form-control txt1" id="textAreaId" rows="1"></textarea>
         <input type="button" class="btn btn1" value="SEND" onclick="sender()">
     </div>
 </div>
 
 <input type="hidden" id="text" name="variable" value="{{ full_text_json }}">
 <input type="hidden" id="no_of_para" value="{{ no_of_para }}">
+
+<script>
+var input = document.getElementById("textAreaId");
+$(document).on("keypress", function(e){
+        if(e.which == 13){
+            sender();
+        }
+
+    });
+</script>
 
 <script>
     var text = document.getElementById("text").value;
@@ -159,7 +169,7 @@
         for(var i=0; i<no_of_para; i++){
             if(text[i].length!=0){
                 $.ajax({
-                    url : "https://readex-major-project.herokuapp.com/get_fill_ups/",
+                    url : "http://127.0.0.1:8000/get_fill_ups/",
                     type: "POST",
                     data : {"text":text[i]},
                     success: function(data, textStatus, jqXHR)
