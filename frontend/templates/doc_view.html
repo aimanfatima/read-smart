@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Document</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -13,8 +13,6 @@
     div.scroll { 
         margin:4px, 4px; 
         padding:4px; 
-        /* background-color: ;  */
-        /* width: 400px;  */
         height: 650px; 
         overflow-x: hidden; 
         overflow-x: auto; 
@@ -22,7 +20,6 @@
     } 
     .myDIV {
         overflow-x: hidden; 
-        /* overflow-x: auto;  */
         position: fixed;
         bottom: 70px;
         right: 20px;
@@ -70,53 +67,54 @@
     }
 
     .send .txt1 {
-        width:100%;
+        width: 200px;
+        height: 40px;
         padding:5px;
         margin:5px;
-        /* color:#00303f;
-        font-weight:bold; */
-}
-.send .txt1:focus {
-  border-color:#00303f;
-}
-.send .btn1 {
-    color: white;
-  background:#00303f;
-  width:70px;
-  margin:5px;
-}
-.txt {
-  background:#c9e1be;
-  padding:5px;
-  position:relative;
-  border-right: 2px solid #00303f;
-}
-.txt2 {
-  background:#A1E7ED;
-  padding:5px;
-  position:relative;
-  border-left: 2px solid #0c757e;
-}
-.txt-div {
-  margin:5px;
-  padding:5px;
-  width:80%;
-  float:right;
-}
+        float:left;
+    }
+    .send .txt1:focus {
+    border-color:#00303f;
+    }
+    .send .btn1 {
+        color: white;
+    background:#00303f;
+    width:70px;
+    height:40px;
+    margin:5px;
+    float: right;
+    }
+    .txt {
+    background:#c9e1be;
+    padding:5px;
+    position:relative;
+    border-right: 2px solid #00303f;
+    }
+    .txt2 {
+    background:#A1E7ED;
+    padding:5px;
+    position:relative;
+    border-left: 2px solid #0c757e;
+    }
+    .txt-div {
+    margin:5px;
+    padding:5px;
+    width:80%;
+    float:right;
+    }
 
-.txt-div2 {
-  margin:5px;
-  padding:5px;
-  width:80%;
-  float:left;
-}
+    .txt-div2 {
+    margin:5px;
+    padding:5px;
+    width:80%;
+    float:left;
+    }
 </style> 
 
 </head>
 <body>
 <!-- Div for documet rendering -->
 <div class="container-fluid">
-    <h1>Document</h1>
     {% for para in full_text%}
     <p>
         {{para}}
@@ -137,7 +135,7 @@
         </div>
     </div>
     <div class="send">
-        <textarea class="form-control txt1" rows="1"></textarea>
+        <textarea class="form-control txt1" id="textAreaId" rows="1"></textarea>
         <input type="button" class="btn btn1" value="SEND" onclick="sender()">
     </div>
 </div>
@@ -153,6 +151,7 @@
     var questions = [];
     var current_para = 0;
     var current_question = 1;
+    var answer = "";
     var first_question = true;
 
     $('body').ready(function() {
@@ -169,6 +168,7 @@
                             questions.push(data);
                             if(first_question){
                                 res(questions[0].fill_ups[0].question);
+                                answer = questions[0].fill_ups[0].answer;
                                 first_question = false;
                             }
                         }
@@ -182,16 +182,26 @@
         }
     });
 
-    function sender() {
-        // console.log(no_of_para)
-        // console.log(questions.length);
+    async function sender() {
+
         console.log(current_para);
         console.log(current_question);
-
+        console.log(answer )
         var msg = $('.txt1').val();
         $('.main').append('<div class="txt-div" ><div class="txt msg">'+msg+'</div><div class="time">'+new Date().toLocaleTimeString()+'</div></div>');
         $('.txt1').val('');
-        // $('.chat').scrollTop = $('.chat').scrollHeight;
+
+        if(msg.toUpperCase() === answer.toUpperCase()) {
+            res("Correct Answer!");
+            await sleep(2000);
+        }      
+        else {
+            res("Wrong Answer!!");
+            await sleep(100);
+            res("Correct answer is : " + answer);
+            await sleep(2000);
+        }
+
         if(current_question < questions[current_para].fill_ups.length - 1 ) {
             current_question++;
         }
@@ -203,6 +213,7 @@
             current_para = 0;
             current_question = 0;
         }
+        answer = questions[current_para].fill_ups[current_question].answer
         res(questions[current_para].fill_ups[current_question].question);
         $('.chat').scrollTop = $('.chat').scrollHeight;
     }
@@ -219,7 +230,18 @@
             x.style.display = "none";
         }
     }
-</script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
+    var text_input = document.getElementById("textAreaId");
+    $(text_input).on("keypress", function(e){
+        if(e.which == 13){
+            sender();
+            if(e.preventDefault) event.preventDefault();
+        } 
+    });
+
+</script>
 </body>
 </html>
