@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Document</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -70,9 +70,11 @@
     }
 
     .send .txt1 {
-        width:100%;
+        width: 200px;
+        height: 40px;
         padding:5px;
         margin:5px;
+        float:left;
         /* color:#00303f;
         font-weight:bold; */
 }
@@ -80,10 +82,12 @@
   border-color:#00303f;
 }
 .send .btn1 {
-    color: white;
+  color: white;
   background:#00303f;
   width:70px;
+  height:40px;
   margin:5px;
+  float: right;
 }
 .txt {
   background:#c9e1be;
@@ -110,13 +114,28 @@
   width:80%;
   float:left;
 }
+
+#grad1 {
+  height: 200px;
+  background-color: rgb(56, 36, 235);
+  background-image: linear-gradient(to left, rgb(23, 34, 192) , rgb(28, 189, 218));
+}
+
+.container-fluid
+{
+  height:5000px;
+  width:1000px;
+  margin:50px auto;
+  background: #fff;
+  position: relative;
+}
+
 </style> 
 
 </head>
-<body>
+<body id="grad1">
 <!-- Div for documet rendering -->
-<div class="container-fluid">
-    <h1>Document</h1>
+<div class="container-fluid scroll">
     {% for para in full_text%}
     <p>
         {{para}}
@@ -126,7 +145,7 @@
 
 <!-- Chat Box -->
 
-<button class="chat-bot-button" onclick="myFunction()">???</button>
+<button class="chat-bot-button" onclick="myFunction()">Bored ?</button>
 
 <div id="chatBox" style="display: none;" class="myDIV" >
     <div class="mainHead">
@@ -150,6 +169,7 @@ var input = document.getElementById("textAreaId");
 $(document).on("keypress", function(e){
         if(e.which == 13){
             sender();
+
         }
 
     });
