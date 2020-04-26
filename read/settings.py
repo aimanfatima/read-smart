@@ -25,7 +25,7 @@ SECRET_KEY = '+&3#%w7%h#qvllo4(4&a)djzdl8184%jv%=h8gv*hk_@3jhj2k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['readex-major-project.herokuapp.com']
 
 
 # Application definition
