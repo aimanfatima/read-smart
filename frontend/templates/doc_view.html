@@ -10,6 +10,29 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>  
+    body {
+        background: rgb(204,204,204); 
+        }
+    .container.page {
+        background: white;
+        display: block;
+        margin: 0 auto; 
+        margin-top: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    .container.page-inner {
+        background: white;
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .page[data-size="A4"] { 
+        width: 95%;
+    }
+    .page-inner[data-size="inner"] { 
+        width: 90%;
+    }
     div.scroll { 
         margin:4px, 4px; 
         padding:4px; 
@@ -126,13 +149,17 @@
 </head>
 <body>
 <!-- Div for documet rendering -->
-<div class="container-fluid">
-    {% for para in full_text%}
-    <p>
-        {{para}}
-    </p>
-    {% endfor %}
-</div>
+<!-- <div class="container-fluid"> -->
+    <div class="container page" data-size="A4">
+        <div class="container page-inner" data-size="inner">
+            {% for para in full_text%}
+            <p>
+                {{para}}
+            </p>
+            {% endfor %}    
+        </div>
+    </div>
+<!-- </div> -->
 
 <!-- Chat Box -->
 
