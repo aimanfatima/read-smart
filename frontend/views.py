@@ -33,8 +33,8 @@ def doc_view(request):
             )
         ## DO SOMETHING WITH FILE ##
         print(file)
-        doc_path = 'staticfiles/doc_file.docx'
-        pdf_path = 'staticfiles/pdf_file.pdf'
+        doc_path = 'static/doc_file.docx'
+        pdf_path = 'static/pdf_file.pdf'
         with open(doc_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
