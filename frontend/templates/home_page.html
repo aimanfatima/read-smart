@@ -21,14 +21,67 @@
                 font-size:0.9rem;
             }
         }
-    </style>
 
+        .form-group .form-control::placeholder {
+            color:white;
+            font-weight: bold;
+        }
+
+        body {
+          background-image:url("staticfiles/bg.png");
+          background-size:50%;
+        }
+
+        .btn-primary {
+          background-color: rgb(50, 104, 104);
+          border-color: rgb(50, 104, 104);
+          font-weight: bold;
+          margin-left: 20%;
+        }
+
+        .custom-file-label {
+          background-color: rgb(168, 168, 168);
+          color: white;
+          font-size: small;
+          font-weight: bold;
+          width: 60%;
+          left: 20%;
+        }
+        .form-control {
+          background-color: rgb(168, 168, 168);
+          color: white;
+          font-weight: bold;
+          width: 60%;
+          font-size: small;
+          margin-left: 20%;
+        }
+    </style>
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Welcome</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>    
+      </ul>
+    </div>  
+  </nav>
+  <br>
   <div class="container">
     <div class="row justify-content-center" style="margin-top:10%"> 
-      <h1 align="center" class="h1 text-monospace">READ-EX</h1>
+      <!-- <h1 align="center" class="h1 text-monospace">READ-EX</h1> -->
     </div>
     <div class="row" style="margin-top:5%">
         <div class="col-sm">
@@ -37,17 +90,17 @@
                 <div class="form-group input-group mb-3" style="margin-bottom:10%;">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="file" name="file">
-                    <label class="custom-file-label" for="filename" aria-describedby="inputGroupFileAddon02">Upload Document</label>
+                    <label class="custom-file-label" for="file" aria-describedby="inputGroupFileAddon02">Upload Doc file</label>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" >Submit</button>
             </form>
 
             <form class="md-form" action="https://readex-major-project.herokuapp.com/read_pdf/" method="post" enctype="multipart/form-data">     
                 <div class="form-group input-group mb-3" style="margin-top:5%">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="file" name="file">
-                    <label class="custom-file-label" for="filename" aria-describedby="inputGroupFileAddon02">Upload PDF</label>
+                    <label class="custom-file-label" for="file" aria-describedby="inputGroupFileAddon02">Upload PDF</label>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -55,7 +108,7 @@
 
             <form class="md-form" action="https://readex-major-project.herokuapp.com/link_view/" method="post" enctype="multipart/form-data">    
                 <div class="form-group" style="margin-top:5%">
-                    <input type="text" class="form-control" name = "link" id = "link" aria-describedby="emailHelp" placeholder="Enter Link">
+                    <input type="text" class="form-control" name = "link" id = "link" placeholder="Enter Link">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -65,5 +118,13 @@
   
     </div>
 </body>
+
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
 
 </html>

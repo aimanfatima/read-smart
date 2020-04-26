@@ -96,6 +96,18 @@
     position:relative;
     border-left: 2px solid #0c757e;
     }
+    .wrong_answer {
+        background:rgb(252, 121, 111);
+        padding:5px;
+        position:relative;
+        border-left: 2px solid #771c00;
+    }
+    .correct_answer {
+        background:rgb(142, 182, 110);
+        padding:5px;
+        position:relative;
+        border-left: 2px solid #03440e;
+    }
     .txt-div {
     margin:5px;
     padding:5px;
@@ -186,13 +198,13 @@
 
         console.log(current_para);
         console.log(current_question);
-        console.log(answer )
+        console.log(answer)
         var msg = $('.txt1').val();
         $('.main').append('<div class="txt-div" ><div class="txt msg">'+msg+'</div><div class="time">'+new Date().toLocaleTimeString()+'</div></div>');
         $('.txt1').val('');
 
         if(msg.toUpperCase() === answer.toUpperCase()) {
-            res("Correct Answer!");
+            res("Correct Answer!!");
             await sleep(2000);
         }      
         else {
@@ -202,7 +214,7 @@
             await sleep(2000);
         }
 
-        if(current_question < questions[current_para].fill_ups.length - 1 ) {
+        if(current_question < questions[current_para].fill_ups.length - 1) {
             current_question++;
         }
         else {
@@ -219,7 +231,15 @@
     }
 
     function res(msg) {
-        $('.main').append('<div class="txt-div2" ><div class="txt2 msg">'+msg+'</div><div class="time2">'+new Date().toLocaleTimeString()+'</div></div>');
+        if(msg === "Wrong Answer!!") {
+            $('.main').append('<div class="txt-div2" ><div class="wrong_answer msg">'+msg+'</div><div class="time2">'+new Date().toLocaleTimeString()+'</div></div>');
+        }
+        else if(msg === "Correct Answer!!") {
+            $('.main').append('<div class="txt-div2" ><div class="correct_answer msg">'+msg+'</div><div class="time2">'+new Date().toLocaleTimeString()+'</div></div>');
+        }
+        else {
+            $('.main').append('<div class="txt-div2" ><div class="txt2 msg">'+msg+'</div><div class="time2">'+new Date().toLocaleTimeString()+'</div></div>');
+        }
     }
 
     function myFunction() {
@@ -238,7 +258,7 @@
     $(text_input).on("keypress", function(e){
         if(e.which == 13){
             sender();
-            if(e.preventDefault) event.preventDefault();
+            if(e.preventDefault) e.preventDefault();
         } 
     });
 
