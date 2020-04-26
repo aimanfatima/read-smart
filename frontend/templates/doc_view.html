@@ -17,21 +17,20 @@
         background: white;
         display: block;
         margin: 0 auto; 
-        margin-top: 15px;
+        margin-top: 20px;
         margin-bottom: 15px;
         box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
     }
     .container.page-inner {
+        top: 20px;
         background: white;
         display: block;
-        margin-top: 15px;
-        margin-bottom: 15px;
     }
     .page[data-size="A4"] { 
         width: 95%;
     }
     .page-inner[data-size="inner"] { 
-        width: 90%;
+        width: 95%;
     }
     div.scroll { 
         margin:4px, 4px; 
@@ -151,7 +150,7 @@
 <!-- Div for documet rendering -->
 <!-- <div class="container-fluid"> -->
     <div class="container page" data-size="A4">
-        <div class="container page-inner" data-size="inner">
+        <div class="container page-inner pt-5" data-size="inner">
             {% for para in full_text%}
             <p>
                 {{para}}
