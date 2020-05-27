@@ -3,27 +3,27 @@ from textblob import TextBlob
 import re
 
 tag_rank = {
-    # 0:"CD", Removing Priority temporarily
+    0:"CD", #Removing Priority temporarily
     1:"NNP",
     2:"NNPS",
     3:"NN",
-    4:"NNS",
-    5:"VB",
-    6:"VBD",
-    7:"VBG",
-    8:"VBN",
-    9:"VBP",
-    10:"VBZ",
-    11:"JJ",
-    12:"JJR",
-    13:"JJS",
+    4:"JJ",
+    5:"NNS",
+    6:"JJR",
+    7:"JJS",
+    8:"VB",
+    9:"VBD",
+    10:"VBG",
+    11:"VBN",
+    12:"VBP",
+    13:"VBZ",
     14:"RB",
     15:"RBR",
     16:"RBS",
     17:"FW",
     18:"CC",
-    # 19:"Change it void",
-    19:"CD",
+    19:"",
+    # 19:"CD",
     20:"DT",
     21:"EX",
     22:"IN",
@@ -60,7 +60,7 @@ class Article:
         sentences = self.summary.sentences
 
         # Remove the first sentence - it's never a good one
-        # del sentences[0]
+        del sentences[0]
 
         trivia_sentences = []
         for sentence in sentences:
@@ -100,7 +100,7 @@ class Article:
         return similar_words
 
     def evaluate_sentence(self, sentence):
-        if len(sentence.words) < 4:
+        if len(sentence.words) < 9:
             return None
         print("\n------------------Sentence-------------------------\n")
         print(sentence)
@@ -122,6 +122,8 @@ class Article:
             # If we couldn't find the word in any phrases,
             # replace it on its own
             if len(replace_nouns) == 0:
+                if len(word) < 7 and tag!='CD':
+                    continue
                 replace_nouns.append(word)
             break
         
